@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Car {
 	
@@ -29,17 +31,20 @@ public class Car {
 	  
 	  @ManyToOne(fetch = FetchType.EAGER)
       @JoinColumn(name = "owner")
+	  @JsonIgnore
 	  private Owner owner;
 
 	
 	  
 	  @ManyToMany(cascade = CascadeType.MERGE)
 	  @JoinTable(name = "car_in_trip", joinColumns = @JoinColumn(name = "car_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "trip_id", referencedColumnName = "trip_id"))
- 	 Set<Trip> trips;
+	  @JsonIgnore
+	  Set<Trip> trips;
 	  
 	  
 	  
 	  @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+	  @JsonIgnore
 	    private Set<CarOfDriver> driversOfCar = new HashSet<>();
 	  
 	
